@@ -4,12 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,7 +18,6 @@ public class Main {
 
 	private final static String DEBITO = "DébitoBancoHoras660";
 	private final static String CREDITO = "CréditoBancoHoras650";
-	private final static int QUANTIDADE_DIGITOS_HORA = 4;
 	
 	public static void main(String[] args) {
 		try {
@@ -38,7 +33,6 @@ public class Main {
 				HSSFSheet sheetHoras = workbook.getSheetAt(0);
 				
 				Iterator<Row> rowIterator = sheetHoras.iterator();
-				List<String> conteudoCelula = new ArrayList<String>();
 				while (rowIterator.hasNext()) {
 					Row row = rowIterator.next();
 					
@@ -66,6 +60,7 @@ public class Main {
 						}
 					}
 				}
+				workbook.close();
 				fis.close();
 
 				LocalTime creditosSomados = LocalTime.of(0, 0);
