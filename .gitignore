@@ -1,0 +1,7 @@
+/build/
+/target/
+/src/test/
+*.class
+.classpath
+.settings/
+.project
