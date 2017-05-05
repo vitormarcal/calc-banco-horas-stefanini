@@ -21,7 +21,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
-			File arquivo = new File("./src/main/java/com/vitormarcal/banco_horas.xls");
+			File arquivo = new File("./src/main/resources/banco_horas.xls");
 			
 			List<LocalTime> listaHoraiosDebito = new ArrayList<LocalTime>();
 			List<LocalTime> listaHoraiosCredito = new ArrayList<LocalTime>();
