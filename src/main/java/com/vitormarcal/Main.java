@@ -59,9 +59,7 @@ public class Main {
 				workbook.close();
 				fis.close();	
 				
-				System.out.println("Creditos somados " + calculadoraBancoDeHoras.getTotalCreditos());
-				System.out.println("Debitos somados :" + calculadoraBancoDeHoras.getTotalDebitos());
-				System.out.println("Creditos somados - debitos totais" + calculadoraBancoDeHoras.calculaDiferenca());
+				System.out.println(calculadoraBancoDeHoras.mostraSituacaoDoBancoHoras());;
 			}
 			
 			

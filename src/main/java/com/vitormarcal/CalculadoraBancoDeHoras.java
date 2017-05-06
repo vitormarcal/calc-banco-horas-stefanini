@@ -1,12 +1,10 @@
 package com.vitormarcal;
 
 import java.time.LocalTime;
-import java.time.temporal.TemporalAmount;
 
 public class CalculadoraBancoDeHoras {
 
 	private static final int MENOR = -1;
-	private static final int IGUAL = 0;
 	private static final int MAIOR = 1;
 	
 	private LocalTime totalCreditos;
@@ -44,17 +42,32 @@ public class CalculadoraBancoDeHoras {
 		
 		int comparacao = this.totalCreditos.compareTo(this.totalDebitos); 
 		
-		if(comparacao == IGUAL){
-			return LocalTime.of(0, 0);
+		if(comparacao == MAIOR){
+			return this.totalCreditos.minusSeconds(this.totalDebitos.toSecondOfDay());
 		} else if(comparacao == MENOR){
 			return this.totalDebitos.minusSeconds(this.totalCreditos.toSecondOfDay());
 		} else {
-			return this.totalCreditos.minusSeconds(this.totalDebitos.toSecondOfDay());
+			return LocalTime.of(0, 0);
 		}
 	}
 	
 	public String mostraSituacaoDoBancoHoras(){
-		return null;
+		LocalTime localTime = calculaDiferenca();
+		
+		StringBuilder considerandos = new StringBuilder();
+		considerandos.append(String.format("Considerando um total de %s horas de creditos e\n", this.totalCreditos));
+		considerandos.append(String.format("considerando um total de %s horas de débitos, \n", this.totalDebitos));
+		
+		int comparacao = this.totalCreditos.compareTo(this.totalDebitos);
+		if(comparacao == MAIOR){
+			considerandos.append(String.format("você ainda tem créditos em banco de %s horas", localTime));
+		} else if (comparacao == MENOR) {
+			considerandos.append(String.format("você está devendo %s horas em banco", localTime));
+		} else {
+			considerandos.append("você não tem débitos e créditos em banco");
+		}
+		
+		return considerandos.toString();
 	}
 	
 	public LocalTime getTotalCreditos() {
