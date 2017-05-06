@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -23,9 +20,7 @@ public class Main {
 		try {
 			File arquivo = new File("./src/main/resources/banco_horas.xls");
 			
-			List<LocalTime> listaHoraiosDebito = new ArrayList<LocalTime>();
-			List<LocalTime> listaHoraiosCredito = new ArrayList<LocalTime>();
-
+			CalculadoraBancoDeHoras calculadoraBancoDeHoras = new CalculadoraBancoDeHoras();
 			if(arquivo.exists()){
 				
 				FileInputStream fis = new FileInputStream(arquivo);
@@ -48,55 +43,25 @@ public class Main {
 								conteudo = conteudo.replace(DEBITO, "");
 								int hora = Integer.parseInt(conteudo.substring(0, 2));
 								int minutos = Integer.parseInt(conteudo.substring(3, 5));
-								listaHoraiosDebito.add(LocalTime.of(hora, minutos));
+								
+								calculadoraBancoDeHoras.incluirDebito(hora, minutos);
 				
 							} else if(conteudo.contains(CREDITO)){
 								conteudo = conteudo.replace(CREDITO, "");
 								int hora = Integer.parseInt(conteudo.substring(0, 2));
 								int minutos = Integer.parseInt(conteudo.substring(3, 5));
-								listaHoraiosCredito.add(LocalTime.of(hora, minutos));
+								calculadoraBancoDeHoras.incluirCredito(hora, minutos);
 							}
 							
 						}
 					}
 				}
 				workbook.close();
-				fis.close();
-
-				LocalTime creditosSomados = LocalTime.of(0, 0);
-				if(listaHoraiosCredito != null){
-					for (LocalTime localTime : listaHoraiosCredito) {
-						creditosSomados = creditosSomados.plusMinutes(localTime.getMinute());
-						creditosSomados = creditosSomados.plusHours(localTime.getHour());
-						
-					}
-				}
-				LocalTime debitosTotais = LocalTime.of(0, 0);
-				if(listaHoraiosDebito != null){
-					for (LocalTime localTime : listaHoraiosDebito) {
-						debitosTotais = debitosTotais.plusMinutes(localTime.getMinute());
-						debitosTotais = debitosTotais.plusHours(localTime.getHour());
-					}
-				}
+				fis.close();	
 				
-				LocalTime resultado = null;
-				
-				if(debitosTotais.compareTo(creditosSomados) == -1){
-					
-					resultado = LocalTime.of(creditosSomados.getHour(), creditosSomados.getMinute());
-					resultado = resultado.minusMinutes(debitosTotais.getMinute());
-					resultado = resultado.minusHours(debitosTotais.getHour());
-					
-				} else {
-					
-					resultado = LocalTime.of(debitosTotais.getHour(), debitosTotais.getMinute());
-					resultado = resultado.minusMinutes(creditosSomados.getMinute());
-					resultado = resultado.minusHours(creditosSomados.getHour());
-				}
-				
-				System.out.println("Creditos somados " + creditosSomados);
-				System.out.println("Debitos totais " + debitosTotais);
-				System.out.println("Creditos somados - Debitos totais " + resultado);
+				System.out.println("Creditos somados " + calculadoraBancoDeHoras.getTotalCreditos());
+				System.out.println("Debitos somados :" + calculadoraBancoDeHoras.getTotalDebitos());
+				System.out.println("Creditos somados - debitos totais" + calculadoraBancoDeHoras.calculaDiferenca());
 			}
 			
 			
