@@ -53,13 +53,13 @@ public class CalculadoraBancoDeHoras {
 	
 	public String mostraSituacaoDoBancoHoras(){
 		LocalTime localTime = calculaDiferenca();
-		
+
 		StringBuilder considerandos = new StringBuilder();
 		considerandos.append(String.format("Considerando um total de %s horas de creditos e\n", this.totalCreditos));
 		considerandos.append(String.format("considerando um total de %s horas de débitos, \n", this.totalDebitos));
-		
+
 		int comparacao = this.totalCreditos.compareTo(this.totalDebitos);
-		if(comparacao == MAIOR){
+		if (comparacao == MAIOR) {
 			considerandos.append(String.format("você ainda tem créditos em banco de %s horas", localTime));
 		} else if (comparacao == MENOR) {
 			considerandos.append(String.format("você está devendo %s horas em banco", localTime));
