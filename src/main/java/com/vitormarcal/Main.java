@@ -25,7 +25,7 @@ public class Main {
 			
 			List<LocalTime> listaHoraiosDebito = new ArrayList<LocalTime>();
 			List<LocalTime> listaHoraiosCredito = new ArrayList<LocalTime>();
-			
+
 			if(arquivo.exists()){
 				
 				FileInputStream fis = new FileInputStream(arquivo);
