@@ -9,6 +9,7 @@ import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
 public class Main {
@@ -35,7 +36,9 @@ public class Main {
 					
 					while (cellIterator.hasNext()){
 						Cell cell = cellIterator.next();
-						if(cell.getColumnIndex() == 0){
+							if(cell.getCellTypeEnum().equals(CellType.STRING)){
+								
+							
 							String conteudo  = cell.getStringCellValue().replace("-", "");
 							
 							conteudo = conteudo.replace(" ", "");
@@ -52,8 +55,7 @@ public class Main {
 								int minutos = Integer.parseInt(conteudo.substring(3, 5));
 								calculadoraBancoDeHoras.incluirCredito(hora, minutos);
 							}
-							
-						}
+						}	
 					}
 				}
 				workbook.close();
